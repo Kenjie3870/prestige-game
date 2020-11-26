@@ -10,12 +10,19 @@ game.points = 0;
 game.incrementers = 1;
 game.workers = 0;
 game.banks = 0;
-game.derivatives = 0; 
+game.derivatives = 0;
+game.derivatives2 = 0;
+game.derivatives3 = 0;
+game.derivatives4 = 0;
 game.dpower = 0;
 game.cost1 = 25;
 game.cost2 = 200;
 game.cost3 = 15000;
 game.cost4 = 100;
+game.cost5 = 1000;
+game.cost6 = 10000;
+game.cost7 = 100000;
+game.cost8 = 1000000;
 game.tickpart = 0;
 game.tickspeed = 50;
 game.b = 0,
@@ -28,8 +35,6 @@ game.autoprestigeamt = 1;
 game.pps = 0;
 game.prestiges = 0;
 console.log("What are you doing here in the console?");
-
-// so we are going to save the game in an object.
 
 function showElement(element) { // shows element
   $(element).style.display = "inline";
@@ -58,6 +63,7 @@ function loop() { // don't change this stuff unless you know what you're doing
   game.points += game.workers/3*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(Math.log10(game.dpower+1)+1); //10 per sec
   game.points += game.banks*100/3*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(game.pu[2]==1 ? Math.log10(game.incrementers+1)+1 : 1)*(Math.log10(game.dpower+1)+1); //1000 per sec
   game.dpower += game.derivatives/30
+  game.derivatives += game.derivatives2/90
   game.time += 1/30;
   game.pps = Math.floor((game.incrementers*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(game.pu[7]==1 ? Math.log10(game.workers+1)+1 : 1)*(Math.log10(game.dpower+1)+1))+(game.workers*10*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(Math.log10(game.dpower+1)+1))+(game.banks*1000*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(game.pu[2]==1 ? Math.log10(game.incrementers+1)+1 : 1)*(Math.log10(game.dpower+1)+1)));
   $("points").innerHTML = `Points: ${Math.floor(game.points)}`;
@@ -70,13 +76,14 @@ function loop() { // don't change this stuff unless you know what you're doing
   $("workerbuy").innerHTML = `Buy a worker for ${game.cost2} points`;
   $("bankbuy").innerHTML = `Buy a bank for ${game.cost3} points`;
   $("derivativebuy").innerHTML = `Buy a derivative for ${game.cost4} b`;
+  $("derivativebuy2").innerHTML = `Buy a second derivative for ${game.cost5} b`
   $("dpower").innerHTML = `You have ${Math.floor(game.dpower)} Derivative Power, giving a ${Math.round(Math.log10(game.dpower+1)+1)}x multiplier to point production`
   $("prestige").innerHTML = `Prestige for ${Math.floor(Math.log2(game.points/100000)*(game.pu[4]==1 ? 2 : 1))+1} b`
   $("b").innerHTML = `You have ${game.b} b`
   $("pu1").innerHTML = `Gain a multiplier to point production based on time played <br> Cost: 1 b <br> Currently: ${Math.round(2*Math.log10(game.time))}x`
   $("pu3").innerHTML = `Banks are more powerful based on Incrementers bought <br> Cost: 5 b <br> Currently: ${Math.round(Math.log10(game.incrementers+1)+1)}x`
   $("pu8").innerHTML = `Incrementers are more powerful based on Workers bought <br> Cost: 30 b <br> Currently: ${Math.round(Math.log10(game.workers+1)+1)}x`
-  $("info").innerHTML = `You have a total of ${game.incrementers+game.workers+game.banks} buildings.<br>You have collected a total of ${game.tb} b.<br>You have prestiged ${game.prestiges} times.<br>You have played this game for ${Math.floor(game.time)} seconds.`
+  $("info").innerHTML = `You have a total of ${game.incrementers+game.workers+game.banks} buildings.<br>You have collected a total of ${game.tb} b.<br>You have prestiged ${game.prestiges} times.<br>You have played this game for ${Math.floor(game.time)} seconds, which is equivalent to ${Math.floor(game.time)/60} minutes, or ${Math.floor(game.time)/3600} hours.`
   $("auto1").innerHTML = `Auto: ${game.automators[0] ? "ON" : "OFF"}`;
   $("auto2").innerHTML = `Auto: ${game.automators[1] ? "ON" : "OFF"}`;
   $("auto3").innerHTML = `Auto: ${game.automators[2] ? "ON" : "OFF"}`;
@@ -123,6 +130,11 @@ function loop() { // don't change this stuff unless you know what you're doing
     $("derivativebuy").className = "buyable";
   }else{
     $("derivativebuy").className = "buyableLocked";
+  }
+  if(game.b >= game.cost5){
+    $("derivativebuy2").className = "buyable";
+  }else{
+    $("derivativebuy2").className = "buyableLocked";
   }
   
   if(game.automators[2] == true){
@@ -196,6 +208,13 @@ function buyInc(x) {
       game.derivatives += 1; 
       game.cost4 = Math.round(game.cost4*1.15);
       }
+    break;
+    case 5:
+      if (game.b > game.cost5) {
+      game.b -= game.cost5
+      game.derivatives2 += 1;
+      game.cost5 = Math.round(game.cost5*1.15)
+      }
   } 
   return ret
 }
@@ -230,7 +249,6 @@ function prestige() {
     game.incrementers = 1;
     game.workers = 0;
     game.banks = 0;
-    game.derivatives = 0; 
     game.cost1 = 25;
     game.cost2 = 200;
     game.cost3 = 15000;
