@@ -82,8 +82,8 @@ function loop() { // don't change this stuff unless you know what you're doing
   $("b").innerHTML = `You have ${game.b} b`
   $("pu1").innerHTML = `Gain a multiplier to point production based on time played <br> Cost: 1 b <br> Currently: ${Math.round(2*Math.log10(game.time))}x`
   $("pu3").innerHTML = `Banks are more powerful based on Incrementers bought <br> Cost: 5 b <br> Currently: ${Math.round(Math.log10(game.incrementers+1)+1)}x`
-  $("pu8").innerHTML = `Incrementers are more powerful based on Workers bought <br> Cost: 30 b <br> Currently: ${Math.round(Math.log10(game.workers+1)+1)}x`
-  $("info").innerHTML = `You have a total of ${game.incrementers+game.workers+game.banks} buildings.<br>You have collected a total of ${game.tb} b.<br>You have prestiged ${game.prestiges} times.<br>You have played this game for ${Math.floor(game.time)} seconds, which is equivalent to ${Math.floor(game.time)/60} minutes, or ${Math.floor(game.time)/3600} hours.`
+  $("pu8").innerHTML = `Incrementers are more powerful based on Workers bought <br> Cost: 30 b <br> Currently: ${Math.round(Math.sqrt(game.workers+1)+1)}x`
+  $("info").innerHTML = `You have a total of ${game.incrementers+game.workers+game.banks} buildings.<br>You have collected a total of ${game.tb} b.<br>You have prestiged ${game.prestiges} times.<br>You have played this game for ${Math.floor(game.time)} seconds.`
   $("auto1").innerHTML = `Auto: ${game.automators[0] ? "ON" : "OFF"}`;
   $("auto2").innerHTML = `Auto: ${game.automators[1] ? "ON" : "OFF"}`;
   $("auto3").innerHTML = `Auto: ${game.automators[2] ? "ON" : "OFF"}`;
