@@ -59,13 +59,13 @@ var mainGameLoop = window.setInterval(function() { // runs the loop
 }, 33);
 
 function loop() { // don't change this stuff unless you know what you're doing
-  game.points += game.incrementers/30*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(game.pu[7]==1 ? Math.log10(game.workers+1)+1 : 1)*(Math.log10(game.dpower+1)+1); //1 per sec 
+  game.points += game.incrementers/30*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(Math.log10(game.dpower+1)+1); //1 per sec 
   game.points += game.workers/3*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(Math.log10(game.dpower+1)+1); //10 per sec
   game.points += game.banks*100/3*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(game.pu[2]==1 ? Math.log10(game.incrementers+1)+1 : 1)*(Math.log10(game.dpower+1)+1); //1000 per sec
   game.dpower += game.derivatives/30
   game.derivatives += game.derivatives2/90
   game.time += 1/30;
-  game.pps = Math.floor((game.incrementers*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(game.pu[7]==1 ? Math.log10(game.workers+1)+1 : 1)*(Math.log10(game.dpower+1)+1))+(game.workers*10*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(Math.log10(game.dpower+1)+1))+(game.banks*1000*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(game.pu[2]==1 ? Math.log10(game.incrementers+1)+1 : 1)*(Math.log10(game.dpower+1)+1)));
+  game.pps = Math.floor((game.incrementers*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(game.pu[7]==1 ? Math.log10(game.workers+1)+1 : 1)*(Math.log10(game.dpower+1)+1))+(game.workers*10*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(Math.log10(game.dpower+1)+1))+(game.banks*1000*(game.pu[0]==1 ? 2*Math.log10(game.time) : 1)*(game.pu[2]==1 ? Math.log10(game.incrementers+1)+1 : 1)*(game.pu[7]==1 ? Math.log10(game.workers+1)+1 : 1)*(Math.log10(game.dpower+1)+1)));
   $("points").innerHTML = `Points: ${Math.floor(game.points)}`;
   $("pps").innerHTML = `You are getting ${game.pps} points per second`;
   $("inc").innerHTML = `Incrementers: ${game.incrementers}`;
@@ -82,7 +82,7 @@ function loop() { // don't change this stuff unless you know what you're doing
   $("b").innerHTML = `You have ${game.b} b`
   $("pu1").innerHTML = `Gain a multiplier to point production based on time played <br> Cost: 1 b <br> Currently: ${Math.round(2*Math.log10(game.time))}x`
   $("pu3").innerHTML = `Banks are more powerful based on Incrementers bought <br> Cost: 5 b <br> Currently: ${Math.round(Math.log10(game.incrementers+1)+1)}x`
-  $("pu8").innerHTML = `Incrementers are more powerful based on Workers bought <br> Cost: 30 b <br> Currently: ${Math.round(Math.sqrt((game.workers^1.5)+1)+1)}x`
+  $("pu8").innerHTML = `Banks are more powerful based on Workers bought <br> Cost: 30 b <br> Currently: ${Math.round(Math.sqrt(+1)+1)}x`
   $("info").innerHTML = `You have a total of ${game.incrementers+game.workers+game.banks} buildings.<br>You have collected a total of ${game.tb} b.<br>You have prestiged ${game.prestiges} times.<br>You have played this game for ${Math.floor(game.time)} seconds, which is equivalent to ${Math.floor(game.time/60)} minutes, or ${Math.floor(game.time/3600)} hours.`
   $("auto1").innerHTML = `Auto: ${game.automators[0] ? "ON" : "OFF"}`;
   $("auto2").innerHTML = `Auto: ${game.automators[1] ? "ON" : "OFF"}`;
